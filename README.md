@@ -199,9 +199,9 @@ curl -X POST http://localhost:8888/v1/default/banks/{bank_id}/reflect \
 | Подписка | Модели |
 |----------|--------|
 | Claude Max | `claude-sonnet-4-20250514`, `claude-opus-4-5-20251101` |
-| Gemini | `gemini-2.5-flash`, `gemini-2.5-pro`, `gemini-3-pro-preview` |
+| Gemini | `gemini-2.0-flash`, `gemini-2.5-flash`, `gemini-2.5-pro` |
 
-> **Важно:** Рекомендуется использовать Gemini модели, т.к. Claude возвращает JSON в markdown блоках.
+> **Примечание:** Markdown Proxy автоматически очищает JSON от markdown-блоков, поэтому работают любые модели.
 
 ## Структура проекта
 
@@ -246,10 +246,12 @@ hs-stop && hs-start
 
 ### "JSON parse error" в логах
 
-Убедитесь, что используется Gemini модель в `.env`:
+Проверь, что Markdown Proxy запущен:
+```bash
+curl http://localhost:8318/health
 ```
-LLM_MODEL=gemini-2.5-flash
-```
+
+Если не работает — перезапусти стек: `hs-stop && hs-start`
 
 ### OAuth токен истёк
 
