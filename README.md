@@ -199,7 +199,7 @@ curl -X POST http://localhost:8888/v1/default/banks/{bank_id}/reflect \
 | Подписка | Модели |
 |----------|--------|
 | Claude Max | `claude-sonnet-4-20250514`, `claude-opus-4-5-20251101` |
-| Gemini | `gemini-2.0-flash`, `gemini-2.5-flash`, `gemini-2.5-pro` |
+| Gemini | `gemini-2.0-flash`, `gemini-2.5-flash`, `gemini-2.5-pro`, `gemini-3-pro-preview` |
 
 > **Примечание:** Markdown Proxy автоматически очищает JSON от markdown-блоков, поэтому работают любые модели.
 
