@@ -1,0 +1,31 @@
+services:
+  # Hindsight - AI Agent Memory System
+  # CLIProxyAPI runs locally (not in Docker) - see scripts/start.sh
+  hindsight:
+    image: ghcr.io/vectorize-io/hindsight:latest
+    container_name: hindsight
+    ports:
+      - "8888:8888"   # API
+      - "9999:9999"   # WebSocket (optional)
+    environment:
+      - HINDSIGHT_API_LLM_PROVIDER=${LLM_PROVIDER:-openai}
+      - HINDSIGHT_API_LLM_API_KEY=${LLM_API_KEY:-hindsight-local-key}
+      - HINDSIGHT_API_LLM_MODEL=${LLM_MODEL:-gpt-4o}
+      # host.docker.internal connects to host machine's localhost
+      - HINDSIGHT_API_LLM_BASE_URL=http://host.docker.internal:8318/v1
+      - TZ=Europe/Moscow
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./data/pg0:/home/hindsight/.pg0
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8888/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 90s
+
+networks:
+  default:
+    name: hindsight-network
